@@ -7,6 +7,48 @@
     android:orientation="vertical"
     tools:context=".MovieDetailsActivity">
 
+    <ImageView
+        android:id="@+id/movie_picture"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"/>
+
+    <TextView
+        android:id="@+id/movie_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:textColor="@color/black"
+        android:gravity="center|left"
+        android:textSize="18dp"
+        android:layout_margin="10dp"
+        android:textStyle="normal"
+        android:text="name"/>
+
+    <TextView
+        android:id="@+id/movie_year"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_margin="10dp"
+        android:textColor="@color/black"
+        android:gravity="center|left"
+        android:textSize="18dp"
+        android:textStyle="normal"
+        android:text="name"/>
+
+    <TextView
+        android:id="@+id/movie_imdbId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:textColor="@color/black"
+        android:gravity="center|left"
+        android:textSize="18dp"
+        android:layout_margin="10dp"
+        android:textStyle="normal"
+        android:text="name"/>
+
 
 
 

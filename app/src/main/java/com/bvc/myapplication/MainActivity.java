@@ -17,6 +17,7 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.bvc.myapplication.Utils.Utils;
@@ -48,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     Search searchMovies;
     MovieListAdapter movieListAdapter;
     RecyclerView recyclerView;
+    LinearLayout search_layot;
 
     APIService apiService = ApiUtils.getAPIService();
 
@@ -65,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
         movieSearch = (ImageView)findViewById(R.id.movieSearch);
         searchMovieName = (EditText) findViewById(R.id.searchMovieName);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        search_layot = (LinearLayout)findViewById(R.id.search_layot);
 
         closeSearch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
 
                     //implement retrofit
                     getMoviesFromServer(searchMovieName.getText().toString().trim());
+                    searchMovieName.setText("");
 
 
                 }else {
@@ -117,7 +121,13 @@ public class MainActivity extends AppCompatActivity {
 
                             searchMovies = new Gson().fromJson(response.body().getAsJsonObject(), Search.class);
                             Log.i("**********", "onResponse: "+searchMovies);
-                            setDataToAdapter(searchMovies);
+
+                            if(!searchMovies.equals(null)){
+                                setDataToAdapter(searchMovies);
+                            }else {
+                                Toast.makeText(getApplicationContext(),"Sorry There is no movies with the name",Toast.LENGTH_LONG).show();
+                            }
+
 
                         }
                     }
@@ -133,17 +143,25 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void setDataToAdapter(Search searchMovies) {
-        movieListAdapter = new MovieListAdapter(MainActivity.this,searchMovies.getSearch());
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        Log.i(TAG, "setDataToAdapter: ---------------"+searchMovies.getSearch());
+
+        if(searchMovies.getSearch() != null){
+            movieListAdapter = new MovieListAdapter(MainActivity.this,searchMovies.getSearch());
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
 //        recyclerView.setLayoutManager(new GridLayoutManager(this,2));
-        recyclerView.setAdapter(movieListAdapter);
+            recyclerView.setAdapter(movieListAdapter);
+            search_layot.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+            final LayoutAnimationController controller =
+                    AnimationUtils.loadLayoutAnimation(MainActivity.this, R.anim.layout_animation_right_to_left);
 
-        final LayoutAnimationController controller =
-                AnimationUtils.loadLayoutAnimation(MainActivity.this, R.anim.layout_animation_right_to_left);
+            recyclerView.setLayoutAnimation(controller);
 
-        recyclerView.setLayoutAnimation(controller);
+            recyclerView.scheduleLayoutAnimation();
+        }else {
+            Toast.makeText(getApplicationContext(),"Sorry There is no movies with the name",Toast.LENGTH_LONG).show();
+        }
 
-        recyclerView.scheduleLayoutAnimation();
 
     }
 

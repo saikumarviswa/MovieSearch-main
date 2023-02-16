@@ -115,10 +115,11 @@
     </androidx.cardview.widget.CardView>
 
     <LinearLayout
+        android:id="@+id/search_layot"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <TextView
             android:layout_width="match_parent"
@@ -133,6 +134,7 @@
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         tools:listitem="@layout/movie_item"
+        android:visibility="gone"
         android:layout_height="wrap_content"/>
 
 
